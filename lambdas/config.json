@@ -1,0 +1,9 @@
+{
+  "table" : "movies_kyle",
+  "host" : "kyle2.cb9co1xxtizk.us-west-2.rds.amazonaws.com",
+  "database" : "movies_kyle",
+  "username" : "kylelingat",
+  "password": " 1938whskyle",
+  "port" : 5432,
+  "idleTimeoutMillis" : 1000
+}

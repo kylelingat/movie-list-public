@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: aws-nodejs # NOTE: update this with your service name
+service: kyle # NOTE: update this with your service name
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -22,7 +22,7 @@ provider:
   runtime: nodejs6.10
 
 # you can overwrite defaults here
-#  stage: dev
+  stage: dev
   region: us-west-2
 
 # you can add statements to the Lambda function's IAM Role here
@@ -54,23 +54,36 @@ provider:
 #    - exclude-me.js
 #    - exclude-me-dir/**
 
+# yml path for multiple lambdas ( https://github.com/serverless/serverless/issues/2372 )
 functions:
-  post:
-    handler: lambdas/post.js
-      events: 
-        request:
-          passThrough: WHEN_NO_TEMPLATES
-          template:
-            application/x-www-form-urlencoded: '{ "body" : "$input.body" }'
-
   get:
-    handle: lambdas/get.js
-
+    handler: lambdas/get.get
+    events:
+      - http:
+          path: get
+          method: get
+  post:
+    request:
+      passThrough: WHEN_NO_TEMPLATES
+      template:
+        application/x-www-form-urlencoded: '{ "body" : "$input.body" }'
+    handler: lambdas/post.post
+    events:
+      - http:
+          path: post
+          method: post
   update:
-    handler: lambdas/update.js
-
+    handler: lambdas/update.update
+    events:
+      - http:
+          path: update
+          method: update
   delete:
-    handler: lambdas/delete.js
+    handler: lambdas/delete.delete
+    evetns:
+      - http:
+          path: delete
+          method: delete
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
